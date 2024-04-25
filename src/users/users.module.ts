@@ -9,4 +9,3 @@ import { RolesModule } from '../roles/roles.module';
   imports: [RolesModule],
 })
 export class UsersModule {}
-
