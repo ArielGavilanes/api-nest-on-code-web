@@ -21,7 +21,7 @@ export class Users {
   @Column({ name: 'contrasena_usuario', type: 'varchar', length: 50 })
   contrasena_usuario: string;
 
-  @Column({ name: 'es_activo', type: 'boolean' })
+  @Column({ name: 'es_activo', type: 'boolean', default: true })
   es_activo: string;
 
   @ManyToOne(() => Roles, (roles) => roles.users)
