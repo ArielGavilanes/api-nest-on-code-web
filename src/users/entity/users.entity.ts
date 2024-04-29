@@ -1,9 +1,11 @@
 import { Roles } from 'src/roles/entity/roles.entity';
+import { UsersData } from 'src/users-data/entity/users-data.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -18,7 +20,7 @@ export class Users {
   @Column({ name: 'nombre_usuario', type: 'varchar', length: 50 })
   nombre_usuario: string;
 
-  @Column({ name: 'contrasena_usuario', type: 'varchar', length: 50 })
+  @Column({ name: 'contrasena_usuario', type: 'varchar' })
   contrasena_usuario: string;
 
   @Column({ name: 'es_activo', type: 'boolean', default: true })
@@ -27,4 +29,7 @@ export class Users {
   @ManyToOne(() => Roles, (roles) => roles.users)
   @JoinColumn({ name: 'id_rol', foreignKeyConstraintName: 'roles_fk' })
   id_rol: Roles;
+
+  @OneToMany(() => UsersData, (users_data) => users_data.id_usuario)
+  users_data: UsersData[];
 }

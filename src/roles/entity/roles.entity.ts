@@ -16,7 +16,7 @@ export class Roles {
     // default: Role.CREADOR,
     enum: Role,
   })
-  nombre_rol: string;
+  nombre_rol: Role;
 
   @OneToMany(() => Users, (users) => users.id_rol)
   users: Users[];
