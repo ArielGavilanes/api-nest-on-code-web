@@ -19,6 +19,15 @@ export class UsersService {
     return userFound;
   }
 
+  async findUserForLogin(nombre_usuario: string): Promise<any> {
+    const userFound = await this.usersRepository.findOne({
+      where: { nombre_usuario: nombre_usuario },
+      relations: ['id_rol'],
+    });
+
+    return userFound;
+  }
+
   async createUser(user: Partial<UserDto>) {
     const newUser = await this.usersRepository.save(user);
     return newUser.id_usuario;

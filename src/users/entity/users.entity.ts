@@ -26,7 +26,7 @@ export class Users {
   @Column({ name: 'es_activo', type: 'boolean', default: true })
   es_activo: boolean;
 
-  @ManyToOne(() => Roles, (roles) => roles.users)
+  @ManyToOne(() => Roles, (roles) => roles.users, { eager: true })
   @JoinColumn({ name: 'id_rol', foreignKeyConstraintName: 'roles_fk' })
   id_rol: Roles;
 
