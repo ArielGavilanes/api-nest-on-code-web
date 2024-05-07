@@ -7,5 +7,5 @@ export class RegisterDto {
   email_usuario: string;
   nombre_usuario_real: string;
   apellido_usuario: string;
-  foto_perfil: any;
+  foto_perfil?: any;
 }
