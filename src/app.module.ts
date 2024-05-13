@@ -7,6 +7,11 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersDataModule } from './users-data/users-data.module';
+import { CursosModule } from './cursos/cursos.module';
+import { MatriculasModule } from './matriculas/matriculas.module';
+import { ContenidoModule } from './contenido/contenido.module';
+import { CategoriasModule } from './categorias/categorias.module';
+import { TipoContenidoModule } from './tipo-contenido/tipo-contenido.module';
 
 @Module({
   imports: [
@@ -28,6 +33,11 @@ import { UsersDataModule } from './users-data/users-data.module';
     RolesModule,
     AuthModule,
     UsersDataModule,
+    CursosModule,
+    MatriculasModule,
+    ContenidoModule,
+    CategoriasModule,
+    TipoContenidoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
