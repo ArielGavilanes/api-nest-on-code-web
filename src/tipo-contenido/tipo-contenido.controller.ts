@@ -1,13 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { ContenidoService } from './tipo-contenido.service';
-import { TipoContenido } from './interface/tipo-contenido.interface';
+import { TipoContenidoService } from './tipo-contenido.service';
+import { TiposContenido } from './interface/tipo-contenido.interface';
 
 @Controller('tipo_contenido')
-export class ContenidoController {
-  constructor(private contenidoService: ContenidoService) {}
+export class TipoContenidoController {
+  constructor(private tipoContenidoService: TipoContenidoService) {}
 
   @Get('')
-  async getAllContenido(): Promise<TipoContenido[]> {
-    return await this.contenidoService.getAllContenidos();
+  async getAllTiposContenido(): Promise<TiposContenido[]> {
+    return await this.tipoContenidoService.getAllTiposContenido();
   }
 }
