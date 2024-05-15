@@ -20,6 +20,10 @@ export class Cursos {
   @Column({ name: 'precio_curso', type: 'float', default: 0 })
   precio_curso: number;
 
-  @Column({ name: 'portada_curso', type: 'bytea' })
+  @Column({
+    name: 'portada_curso',
+    type: 'bytea',
+    default: () => "decode('ffffff', 'hex')",
+  })
   portada_curso: Buffer;
 }
