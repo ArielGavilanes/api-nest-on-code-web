@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Categorias } from 'src/categorias/entity/categorias.entity';
+import { Users } from 'src/users/entity/users.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('cursos')
 export class Cursos {
@@ -14,7 +22,7 @@ export class Cursos {
   @Column({ name: 'descripcion_curso', type: 'varchar', length: '500' })
   descripcion_curso: string;
 
-  @Column({ name: 'premium _curso', type: 'boolean', default: false })
+  @Column({ name: 'premium_curso', type: 'boolean', default: false })
   premium_curso: boolean;
 
   @Column({ name: 'precio_curso', type: 'float', default: 0 })
@@ -26,4 +34,15 @@ export class Cursos {
     default: () => "decode('ffffff', 'hex')",
   })
   portada_curso: Buffer;
+
+  @ManyToOne(() => Users, (users) => users.cursos)
+  @JoinColumn({ name: 'id_creador', foreignKeyConstraintName: 'usuarios_fk' })
+  id_creador: Users;
+
+  @ManyToOne(() => Categorias, (categorias) => categorias.cursos)
+  @JoinColumn({
+    name: 'id_categoria',
+    foreignKeyConstraintName: 'categorias_fk',
+  })
+  id_categoria: Categorias;
 }

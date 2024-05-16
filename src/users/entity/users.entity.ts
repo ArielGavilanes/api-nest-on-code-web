@@ -1,3 +1,4 @@
+import { Cursos } from 'src/cursos/entity/cursos.entity';
 import { Roles } from 'src/roles/entity/roles.entity';
 import { UsersData } from 'src/users-data/entity/users-data.entity';
 import {
@@ -32,4 +33,7 @@ export class Users {
 
   @OneToMany(() => UsersData, (users_data) => users_data.id_usuario)
   users_data: UsersData[];
+
+  @OneToMany(() => Cursos, (cursos) => cursos.id_creador)
+  cursos: Cursos[];
 }

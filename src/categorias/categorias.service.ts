@@ -15,4 +15,13 @@ export class CategoriasService {
     const categoriesFound = await this.categoriasRepository.find();
     return categoriesFound;
   }
+
+  async getIdFromCategoryName(nombre_categoria): Promise<any> {
+    const categoryFound = await this.categoriasRepository.findOne({
+      where: { nombre_categoria: nombre_categoria },
+      select: ['id_categoria'],
+    });
+
+    return categoryFound;
+  }
 }
