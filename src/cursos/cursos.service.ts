@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cursos } from './entity/cursos.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Curso } from './interface/cursos.interface';
 import { CategoriasService } from 'src/categorias/categorias.service';
 
@@ -28,5 +28,14 @@ export class CursosService {
     });
 
     return courseFound;
+  }
+
+  async searchCursos(nombre_curso: string): Promise<any> {
+    const foundedCursos = await this.cursosRepository.find({
+      where: {
+        nombre_curso: Like(`%${nombre_curso}%`),
+      },
+    });
+    return foundedCursos;
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { CursosService } from './cursos.service';
 import { Curso } from './interface/cursos.interface';
 
@@ -11,6 +11,11 @@ export class CursosController {
     @Param('nombre_categoria') nombre_categoria,
   ): Promise<any> {
     return this.cursosService.getCoursesByCategoryName(nombre_categoria);
+  }
+
+  @Get('search')
+  async searchCursos(@Query('nombre_curso') nombre_curso) {
+    return await this.cursosService.searchCursos(nombre_curso);
   }
 
   @Get(':id_curso')
