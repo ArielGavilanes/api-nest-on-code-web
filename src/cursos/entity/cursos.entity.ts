@@ -1,10 +1,12 @@
 import { Categorias } from 'src/categorias/entity/categorias.entity';
+import { Matriculas } from 'src/matriculas/entity/matriculas.entity';
 import { Users } from 'src/users/entity/users.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -45,4 +47,7 @@ export class Cursos {
     foreignKeyConstraintName: 'categorias_fk',
   })
   id_categoria: Categorias;
+
+  @OneToMany(() => Matriculas, (matriculas) => matriculas.id_curso)
+  matriculas: Matriculas[];
 }
