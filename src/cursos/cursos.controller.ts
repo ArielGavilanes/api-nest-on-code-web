@@ -22,4 +22,9 @@ export class CursosController {
   async getCourseById(@Param('id_curso') id_curso: number): Promise<Curso> {
     return this.cursosService.getCourseById(id_curso);
   }
+
+  @Get('/creador/:userId')
+  async getCursosPorUsuario(@Param('userId') userId: number) {
+    return this.cursosService.getCoursesByUserId(userId);
+  }
 }
