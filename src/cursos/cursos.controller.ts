@@ -23,8 +23,8 @@ export class CursosController {
     return this.cursosService.getCourseById(id_curso);
   }
 
-  @Get('/creador/:userId')
-  async getCursosPorUsuario(@Param('userId') userId: number) {
-    return this.cursosService.getCoursesByUserId(userId);
+  @Get('/creador/:id_creador')
+  async getCursosPorUsuario(@Param('id_creador') id_creador: number) {
+    return this.cursosService.getCoursesByCreatorId(id_creador);
   }
 }
