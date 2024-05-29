@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { MatriculasController } from './matriculas.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { MatriculasService } from './matriculas.service';
-import { HttpModule } from '@nestjs/axios';
+import { MatriculasController } from './matriculas.controller';
+import { Matriculas } from './entity/matriculas.entity';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [MatriculasController],
+  imports: [TypeOrmModule.forFeature([Matriculas])],
   providers: [MatriculasService],
+  controllers: [MatriculasController],
 })
 export class MatriculasModule {}
