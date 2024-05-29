@@ -10,7 +10,7 @@ export class MatriculasService {
     private matriculasRepository: Repository<Matriculas>,
   ) {}
 
-  async crearMatricula(matricula: Matriculas): Promise<any> {
+  async crearMatricula(matricula: any): Promise<any> {
     const nuevaMatricula = this.matriculasRepository.create(matricula);
     return await this.matriculasRepository.save(nuevaMatricula);
   }
