@@ -35,26 +35,8 @@ export class CursosController {
     return this.cursosService.getCourseById(id_curso);
   }
 
-  @Post('')
-  @UseInterceptors(FileInterceptor('portada_curso'))
-  async createCurso(
-    @UploadedFile() portada_curso: Express.Multer.File,
-    @Body() curso: CursosDto,
-  ): Promise<any> {
-    curso.portada_curso = portada_curso;
-    return await this.cursosService.createCourse(curso);
-  }
-
-  @Put(':id_curso')
-  @UseInterceptors(FileInterceptor('portada_curso'))
-  async updateCourse(
-    @UploadedFile() portada_curso: Express.Multer.File,
-    @Body() curso: Partial<CursosDto>,
-    @Param('id_curso') id_curso: number,
-  ): Promise<any> {
-    if (portada_curso) {
-      curso.portada_curso = portada_curso;
-    }
-    return await this.cursosService.updateCourse(curso, id_curso);
+  @Get('/creador/:id_creador')
+  async getCursosPorUsuario(@Param('id_creador') id_creador: number) {
+    return this.cursosService.getCoursesByCreatorId(id_creador);
   }
 }
