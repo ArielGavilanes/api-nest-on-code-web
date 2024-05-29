@@ -4,6 +4,7 @@ import { Cursos } from './entity/cursos.entity';
 import { Like, Repository } from 'typeorm';
 import { Curso } from './interface/cursos.interface';
 import { CategoriasService } from 'src/categorias/categorias.service';
+import { CursosDto } from './dto/cursos.dto';
 
 @Injectable()
 export class CursosService {
@@ -30,12 +31,24 @@ export class CursosService {
     return courseFound;
   }
 
-  async searchCursos(nombre_curso: string): Promise<any> {
+  async searchCourse(nombre_curso: string): Promise<any> {
     const foundedCursos = await this.cursosRepository.find({
       where: {
         nombre_curso: Like(`%${nombre_curso}%`),
       },
     });
     return foundedCursos;
+  }
+
+  async createCourse(curso: CursosDto): Promise<any> {
+    const newCourse = await this.cursosRepository.create(curso);
+    return this.cursosRepository.save(newCourse);
+  }
+
+  async updateCourse(
+    curso: Partial<CursosDto>,
+    id_curso: number,
+  ): Promise<any> {
+    return await this.cursosRepository.update(id_curso, curso);
   }
 }

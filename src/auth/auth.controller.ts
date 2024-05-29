@@ -27,8 +27,6 @@ export class AuthController {
   ): Promise<any> {
     user.foto_perfil = foto_perfil;
     // user.foto_portada = foto_portada;
-    console.log('de controller', user);
-    // user.foto_portada = foto_portada;
     this.authService.registerUser(user);
   }
 
