@@ -35,5 +35,5 @@ export class Matriculas {
     name: 'id_estudiante',
     foreignKeyConstraintName: 'users_fk',
   })
-  id_estudiante: Cursos;
+  id_estudiante: Users;
 }

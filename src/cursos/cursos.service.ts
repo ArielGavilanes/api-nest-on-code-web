@@ -31,6 +31,13 @@ export class CursosService {
     return courseFound;
   }
 
+  async getCoursesByCreatorId(id_creador: number): Promise<any> {
+    const cursos = await this.cursosRepository.find({
+      where: { id_creador: { id_usuario: id_creador } },
+    });
+    return cursos;
+  }
+
   async searchCourse(nombre_curso: string): Promise<any> {
     const foundedCursos = await this.cursosRepository.find({
       where: {
