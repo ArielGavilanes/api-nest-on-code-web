@@ -1,4 +1,5 @@
 import { Categorias } from 'src/categorias/entity/categorias.entity';
+import { Contenido } from 'src/contenido/entity/contenido.entity';
 import { Matriculas } from 'src/matriculas/entity/matriculas.entity';
 import { Users } from 'src/users/entity/users.entity';
 import {
@@ -50,4 +51,7 @@ export class Cursos {
 
   @OneToMany(() => Matriculas, (matriculas) => matriculas.id_curso)
   matriculas: Matriculas[];
+
+  @OneToMany(() => Contenido, (contenido) => contenido.id_curso)
+  contenidos: Contenido[];
 }

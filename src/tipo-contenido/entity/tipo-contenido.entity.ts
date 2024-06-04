@@ -1,5 +1,6 @@
 import { TipoContenidoEnum } from 'src/common/enum/tipo-contenido.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Contenido } from 'src/contenido/entity/contenido.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tipo de contenido')
 export class TipoContenido {
@@ -15,4 +16,7 @@ export class TipoContenido {
     enum: TipoContenidoEnum,
   })
   nombre_tipo_contenido: TipoContenidoEnum;
+
+  @OneToMany(() => Contenido, (contenido) => contenido.id_tipo_contenido)
+  contenidos: Contenido[];
 }

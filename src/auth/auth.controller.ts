@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -31,6 +32,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(200)
   async loginUser(@Body() userCredentials: LoginDto): Promise<any> {
     return this.authService.loginUser(userCredentials);
   }
