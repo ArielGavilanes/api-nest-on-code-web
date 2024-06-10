@@ -48,6 +48,7 @@ export class CursosService {
   }
 
   async createCourse(curso: CursosDto): Promise<any> {
+    curso.portada_curso = Buffer.from(curso.portada_curso.buffer);
     const newCourse = await this.cursosRepository.create(curso);
     return this.cursosRepository.save(newCourse);
   }
@@ -56,6 +57,7 @@ export class CursosService {
     curso: Partial<CursosDto>,
     id_curso: number,
   ): Promise<any> {
+    curso.portada_curso = Buffer.from(curso.portada_curso.buffer);
     return await this.cursosRepository.update(id_curso, curso);
   }
 }

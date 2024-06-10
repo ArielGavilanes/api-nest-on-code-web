@@ -12,6 +12,9 @@ export class ContenidoService {
   ) {}
 
   async createContent(content: ContenidoDto): Promise<any> {
+    if (content.imagen_contenido) {
+      content.imagen_contenido = Buffer.from(content.imagen_contenido.buffer);
+    }
     const newContent = await this.contenidosRepository.create(content);
     return await this.contenidosRepository.save(newContent);
   }

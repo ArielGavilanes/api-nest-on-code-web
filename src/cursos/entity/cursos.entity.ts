@@ -38,7 +38,10 @@ export class Cursos {
   })
   portada_curso: Buffer;
 
-  @ManyToOne(() => Users, (users) => users.cursos)
+  @Column({ name: 'con_certificacion', type: 'boolean', default: false })
+  con_certificacion: boolean;
+
+  @ManyToOne(() => Users, (users) => users.cursos, { eager: true })
   @JoinColumn({ name: 'id_creador', foreignKeyConstraintName: 'usuarios_fk' })
   id_creador: Users;
 

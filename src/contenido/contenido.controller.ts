@@ -22,7 +22,7 @@ export class ContenidoController {
     @UploadedFile() imagen_contenido: Express.Multer.File,
     @Body() content: ContenidoDto,
   ) {
-    console.log(content);
+    console.log(content); //TODO: Borrar este console.log
     if (imagen_contenido) {
       content.imagen_contenido = imagen_contenido;
     }
