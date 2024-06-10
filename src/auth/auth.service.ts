@@ -95,4 +95,22 @@ export class AuthService {
       id_rol: userFound.id_rol.id_rol,
     };
   }
+
+  async getProfile(nombre_usuario: string) {
+    try {
+      const user = await this.usersService.findUserByUsername(nombre_usuario);
+      const userLoggedInId = user.id_usuario;
+      const userData =
+        await this.usersDataService.getUserDataById(userLoggedInId);
+
+      const profile = {
+        ...user,
+        ...userData,
+      };
+
+      return profile;
+    } catch (error) {
+      throw new UnauthorizedException('');
+    }
+  }
 }

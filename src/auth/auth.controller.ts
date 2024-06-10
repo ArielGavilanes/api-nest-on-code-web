@@ -1,15 +1,20 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
+  Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { LoginDto } from './dto/login.dto';
+// import { Auth } from './decorators/auth.decorator';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -35,5 +40,14 @@ export class AuthController {
   @HttpCode(200)
   async loginUser(@Body() userCredentials: LoginDto): Promise<any> {
     return this.authService.loginUser(userCredentials);
+  }
+
+  @Get('profile')
+  //@Auth() TODO: Cambiar tras ajustar la logica de decorador
+  @UseGuards(AuthGuard)
+  async profile(@Req() request): Promise<any> {
+    const user = request.user;
+    const nombre_usuario = user.nombre_usuario;
+    return await this.authService.getProfile(nombre_usuario);
   }
 }
