@@ -1,20 +1,62 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { MatriculasService } from './matriculas.service';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('matriculas')
 export class MatriculasController {
   constructor(private matriculasService: MatriculasService) {}
 
   @Post()
-  async crearMatricula(@Body() matricula: any): Promise<any> {
-    return this.matriculasService.createMatricula(matricula);
+  @UseGuards(AuthGuard)
+  async createMatricula(@Body() matricula: any, @Req() request): Promise<any> {
+    const user = request.user;
+    const id_estudiante = user.id_usuario;
+    const finallyMatricula = {
+      ...matricula,
+      id_estudiante: id_estudiante,
+    };
+    return this.matriculasService.createMatricula(finallyMatricula);
   }
 
-  @Get('cursos/:id_estudiante')
-  async getCoursesWhereStudentsAreMatriculatedIn(
-    @Param('id_estudiante') id_estudiante,
-  ) {
+  @Get('cursos')
+  @UseGuards(AuthGuard)
+  async getCoursesWhereStudentsAreMatriculatedIn(@Req() request): Promise<any> {
+    const user = request.user;
+    const id_estudiante = user.id_usuario;
     return this.matriculasService.getCoursesWhereStudentsAreMatriculatedIn(
+      id_estudiante,
+    );
+  }
+
+  @Get('estadistica')
+  @UseGuards(AuthGuard)
+  async getMatriculeOfTheLast3Days(@Req() request) {
+    const user = request.user;
+    const id_estudiante = user.id_usuario;
+    return await this.matriculasService.getMatriculeOfTheLast3Days(
+      id_estudiante,
+    );
+  }
+
+  @Get('access/:id_curso')
+  @UseGuards(AuthGuard)
+  async verifyIfAStudentIsMatriculatedIn(
+    @Param('id_curso', ParseIntPipe) id_curso: number,
+    @Req() request,
+  ): Promise<any> {
+    const user = request.user;
+    const id_estudiante = user.id_usuario;
+    return await this.matriculasService.verifyIfAStudentIsMatriculatedIn(
+      id_curso,
       id_estudiante,
     );
   }

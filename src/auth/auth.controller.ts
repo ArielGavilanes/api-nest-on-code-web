@@ -31,7 +31,10 @@ export class AuthController {
     // @UploadedFile() foto_portada: Express.Multer.File,
     @Body() user: RegisterDto,
   ): Promise<any> {
-    user.foto_perfil = foto_perfil;
+    console.log('user', user);
+    if (foto_perfil) {
+      user.foto_perfil = foto_perfil;
+    }
     // user.foto_portada = foto_portada;
     this.authService.registerUser(user);
   }

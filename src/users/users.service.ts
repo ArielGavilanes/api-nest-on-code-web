@@ -23,6 +23,14 @@ export class UsersService {
 
     return userFound;
   }
+  async findUserByUsernameForRegister(nombre_usuario: string): Promise<User> {
+    const userFound = await this.usersRepository.findOne({
+      where: { nombre_usuario: nombre_usuario },
+      relations: ['id_rol'],
+    });
+
+    return userFound;
+  }
 
   async findUserForLogin(nombre_usuario: string): Promise<any> {
     const userFound = await this.usersRepository.findOne({

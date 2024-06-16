@@ -3,16 +3,20 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
+  Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CursosService } from './cursos.service';
 import { Curso } from './interface/cursos.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CursosDto } from './dto/cursos.dto';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('cursos')
 export class CursosController {
@@ -48,13 +52,31 @@ export class CursosController {
   @Put(':id_curso')
   @UseInterceptors(FileInterceptor('portada_curso'))
   async updateCourse(
-    @UploadedFile() portada_curso: Express.Multer.File,
     @Body() curso: Partial<CursosDto>,
     @Param('id_curso') id_curso: number,
+    @UploadedFile() portada_curso?: Express.Multer.File,
   ): Promise<any> {
+    console.log(curso);
     if (portada_curso) {
       curso.portada_curso = portada_curso;
     }
     return await this.cursosService.updateCourse(curso, id_curso);
   }
+
+  @Get('access/:id_curso')
+  @UseGuards(AuthGuard)
+  async verifyIfCreatorHavePermissions(
+    @Req() request,
+    @Param('id_curso', ParseIntPipe) id_curso: number,
+  ) {
+    const user = request.user;
+    const id_creador = user.id_usuario;
+    return await this.cursosService.verifyIfCreatorHavePermissions(
+      id_creador,
+      id_curso,
+    );
+  }
+
+  @Post('/upload/image')
+  async justUploadTheFuckingImage(): Promise<void> {}
 }

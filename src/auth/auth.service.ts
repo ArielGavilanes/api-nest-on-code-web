@@ -20,7 +20,7 @@ export class AuthService {
   ) {}
 
   async registerUser(user: RegisterDto): Promise<void> {
-    const userFound = await this.usersService.findUserByUsername(
+    const userFound = await this.usersService.findUserByUsernameForRegister(
       user.nombre_usuario,
     );
 
@@ -85,6 +85,7 @@ export class AuthService {
     const payload = {
       nombre_usuario: userFound.nombre_usuario,
       id_rol: userFound.id_rol.id_rol,
+      id_usuario: userFound.id_usuario,
     };
 
     const token = await this.jwtService.signAsync(payload);
@@ -105,7 +106,7 @@ export class AuthService {
 
       const profile = {
         ...user,
-        ...userData,
+        userData,
       };
 
       return profile;

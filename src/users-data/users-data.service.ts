@@ -27,4 +27,21 @@ export class UsersDataService {
 
     return userData;
   }
+
+  async updateUserDataCover(id_usuario, userData): Promise<any> {
+    userData.foto_portada = Buffer.from(userData.foto_portada.buffer);
+    return await this.userDataRepository.update(
+      { id_usuario: id_usuario },
+      userData,
+    );
+  }
+
+  async updateUserDataProfile(id_usuario, userData): Promise<any> {
+    console.log(userData.foto_perfil.buffer);
+    userData.foto_perfil = Buffer.from(userData.foto_perfil.buffer);
+    return await this.userDataRepository.update(
+      { id_usuario: id_usuario },
+      userData,
+    );
+  }
 }

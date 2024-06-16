@@ -57,7 +57,25 @@ export class CursosService {
     curso: Partial<CursosDto>,
     id_curso: number,
   ): Promise<any> {
-    curso.portada_curso = Buffer.from(curso.portada_curso.buffer);
+    if (curso.portada_curso) {
+      curso.portada_curso = Buffer.from(curso.portada_curso.buffer);
+    }
+
     return await this.cursosRepository.update(id_curso, curso);
+  }
+
+  async verifyIfCreatorHavePermissions(id_creador, id_curso) {
+    const course = await this.cursosRepository.findOne({
+      where: {
+        id_creador: { id_usuario: id_creador },
+        id_curso: id_curso,
+      },
+    });
+
+    if (course) {
+      return true;
+    }
+
+    return false;
   }
 }
