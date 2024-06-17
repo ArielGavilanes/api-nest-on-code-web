@@ -34,6 +34,14 @@ export class CursosController {
     return await this.cursosService.searchCourse(nombre_curso);
   }
 
+  @Get('creador')
+  @UseGuards(AuthGuard)
+  async getCoursesByCreatorId(@Req() request) {
+    const user = request.user;
+    const id_creador = user.id_usuario;
+    return await this.cursosService.getCoursesByCreatorId(id_creador);
+  }
+
   @Get(':id_curso')
   async getCourseById(@Param('id_curso') id_curso: number): Promise<Curso> {
     return this.cursosService.getCourseById(id_curso);
