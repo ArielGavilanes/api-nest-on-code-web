@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cursos } from './entity/cursos.entity';
 import { Like, Repository } from 'typeorm';
@@ -17,6 +21,9 @@ export class CursosService {
     const courseFound = await this.cursosRepository.findOneBy({
       id_curso: id_curso,
     });
+    if (!courseFound) {
+      throw new BadRequestException();
+    }
     return courseFound;
   }
 
@@ -28,6 +35,10 @@ export class CursosService {
       id_categoria: id_categoria.id_categoria,
     });
 
+    if (!courseFound) {
+      throw new BadRequestException();
+    }
+
     return courseFound;
   }
 
@@ -35,6 +46,10 @@ export class CursosService {
     const cursos = await this.cursosRepository.find({
       where: { id_creador: { id_usuario: id_creador } },
     });
+
+    if (!cursos) {
+      throw new BadRequestException();
+    }
     return cursos;
   }
 
@@ -44,6 +59,10 @@ export class CursosService {
         nombre_curso: Like(`%${nombre_curso}%`),
       },
     });
+
+    if (!foundedCursos) {
+      throw new BadRequestException();
+    }
     return foundedCursos;
   }
 
@@ -57,6 +76,10 @@ export class CursosService {
     curso: Partial<CursosDto>,
     id_curso: number,
   ): Promise<any> {
+    const cursoFound = await this.getCourseById(id_curso);
+    if (!cursoFound) {
+      throw new NotFoundException();
+    }
     if (curso.portada_curso) {
       curso.portada_curso = Buffer.from(curso.portada_curso.buffer);
     }

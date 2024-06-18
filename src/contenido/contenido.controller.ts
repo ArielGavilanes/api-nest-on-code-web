@@ -7,6 +7,8 @@ import {
   Post,
   UploadedFile,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ContenidoService } from './contenido.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -17,12 +19,12 @@ export class ContenidoController {
   constructor(private contenidosService: ContenidoService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('imagen_contenido'))
   async createContent(
     @UploadedFile() imagen_contenido: Express.Multer.File,
     @Body() content: ContenidoDto,
   ) {
-    console.log(content); //TODO: Borrar este console.log
     if (imagen_contenido) {
       content.imagen_contenido = imagen_contenido;
     }
