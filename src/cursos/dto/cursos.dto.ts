@@ -11,4 +11,3 @@ export class CursosDto {
   id_creador: Users;
   id_categoria: Categorias;
 }
-//
