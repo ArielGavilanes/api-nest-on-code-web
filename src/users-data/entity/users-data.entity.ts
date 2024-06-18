@@ -54,5 +54,3 @@ export class UsersData {
   @JoinColumn({ name: 'id_usuario', foreignKeyConstraintName: 'usuarios_fk' })
   id_usuario: Users;
 }
-
-//
