@@ -55,3 +55,5 @@ export class ContenidoDto {
   @Type(() => TipoContenido)
   id_tipo_contenido: TipoContenido;
 }
+
+//
