@@ -7,6 +7,8 @@ import {
   Post,
   Req,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MatriculasService } from './matriculas.service';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
@@ -17,6 +19,7 @@ export class MatriculasController {
   constructor(private matriculasService: MatriculasService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   @UseGuards(AuthGuard)
   async createMatricula(
     @Body() matricula: MatriculasDto,
