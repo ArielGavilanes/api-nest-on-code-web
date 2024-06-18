@@ -11,12 +11,8 @@ export class UsersDataService {
   ) {}
 
   async saveUserData(userData): Promise<void> {
-    try {
-      const newUserData = this.userDataRepository.create(userData);
-      await this.userDataRepository.save(newUserData);
-    } catch (error) {
-      throw new BadRequestException();
-    }
+    const newUserData = this.userDataRepository.create(userData);
+    await this.userDataRepository.save(newUserData);
   }
 
   async getUserDataById(id_usuario): Promise<any> {
@@ -33,12 +29,6 @@ export class UsersDataService {
   }
 
   async updateUserDataCover(id_usuario, userData): Promise<any> {
-    const data = this.getUserDataById(id_usuario);
-
-    if (!data) {
-      throw new BadRequestException();
-    }
-
     userData.foto_portada = Buffer.from(userData.foto_portada.buffer);
     return await this.userDataRepository.update(
       { id_usuario: id_usuario },
@@ -47,12 +37,7 @@ export class UsersDataService {
   }
 
   async updateUserDataProfile(id_usuario, userData): Promise<any> {
-    const data = this.getUserDataById(id_usuario);
-
-    if (!data) {
-      throw new BadRequestException();
-    }
-
+    console.log(userData.foto_perfil.buffer);
     userData.foto_perfil = Buffer.from(userData.foto_perfil.buffer);
     return await this.userDataRepository.update(
       { id_usuario: id_usuario },

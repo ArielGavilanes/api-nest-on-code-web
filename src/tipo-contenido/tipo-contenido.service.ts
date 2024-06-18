@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TiposContenido } from './interface/tipo-contenido.interface';
@@ -13,9 +13,6 @@ export class TipoContenidoService {
 
   async getAllTiposContenido(): Promise<TiposContenido[]> {
     const tiposContenidosFound = await this.contenidoRepository.find();
-    if (!tiposContenidosFound) {
-      throw new NotFoundException();
-    }
     return tiposContenidosFound;
   }
 }

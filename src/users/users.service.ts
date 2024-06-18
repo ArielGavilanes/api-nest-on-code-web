@@ -38,9 +38,6 @@ export class UsersService {
       relations: ['id_rol'],
     });
 
-    // if (!userFound) {
-    //   throw new NotFoundException();
-    // }
     return userFound;
   }
 

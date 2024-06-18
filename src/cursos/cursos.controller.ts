@@ -11,15 +11,12 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CursosService } from './cursos.service';
 import { Curso } from './interface/cursos.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CursosDto } from './dto/cursos.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { UpdateCoursesDto } from './dto/update-cursos.dto';
 
 @Controller('cursos')
 export class CursosController {
@@ -46,14 +43,11 @@ export class CursosController {
   }
 
   @Get(':id_curso')
-  async getCourseById(
-    @Param('id_curso', ParseIntPipe) id_curso: number,
-  ): Promise<Curso> {
+  async getCourseById(@Param('id_curso') id_curso: number): Promise<Curso> {
     return this.cursosService.getCourseById(id_curso);
   }
 
   @Post('')
-  @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('portada_curso'))
   async createCurso(
     @UploadedFile() portada_curso: Express.Multer.File,
@@ -64,11 +58,10 @@ export class CursosController {
   }
 
   @Put(':id_curso')
-  @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('portada_curso'))
   async updateCourse(
-    @Body() curso: UpdateCoursesDto,
-    @Param('id_curso', ParseIntPipe) id_curso: number,
+    @Body() curso: Partial<CursosDto>,
+    @Param('id_curso') id_curso: number,
     @UploadedFile() portada_curso?: Express.Multer.File,
   ): Promise<any> {
     console.log(curso);

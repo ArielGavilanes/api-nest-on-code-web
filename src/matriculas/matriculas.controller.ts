@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { MatriculasService } from './matriculas.service';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { MatriculasDto } from './dto/matriculas.dto';
 
 @Controller('matriculas')
 export class MatriculasController {
@@ -18,10 +17,7 @@ export class MatriculasController {
 
   @Post()
   @UseGuards(AuthGuard)
-  async createMatricula(
-    @Body() matricula: MatriculasDto,
-    @Req() request,
-  ): Promise<any> {
+  async createMatricula(@Body() matricula: any, @Req() request): Promise<any> {
     const user = request.user;
     const id_estudiante = user.id_usuario;
     const finallyMatricula = {
