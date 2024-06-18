@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Roles } from './entity/roles.entity';
 import { Repository } from 'typeorm';
-import { Roles as Role } from './interface/roles.interface';
+import { Roles } from './entity/roles.entity';
 
 @Injectable()
 export class RolesService {
@@ -10,8 +9,11 @@ export class RolesService {
     @InjectRepository(Roles) private rolesRepository: Repository<Roles>,
   ) {}
 
-  async getAllRoles(): Promise<Role[]> {
+  async getAllRoles(): Promise<Roles[]> {
     const rolesFound = await this.rolesRepository.find();
+    if (!rolesFound) {
+      throw new NotFoundException();
+    }
     return rolesFound;
   }
 }
