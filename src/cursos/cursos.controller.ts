@@ -39,6 +39,14 @@ export class CursosController {
     return this.cursosService.getCourseById(id_curso);
   }
 
+  @Get('creador')
+  @UseGuards(AuthGuard)
+  async getCoursesByCreatorId(@Req() request) {
+    const user = request.user;
+    const id_creador = user.id_usuario;
+    return await this.cursosService.getCoursesByCreatorId(id_creador);
+  }
+
   @Post('')
   @UseInterceptors(FileInterceptor('portada_curso'))
   async createCurso(
